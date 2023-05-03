@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useEffect, useReducer, useState } from 'react';
 
 export const AdminContext = createContext();
 
@@ -26,8 +26,25 @@ function reducer(state, action) {
 }
 
 export const AdminProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
+  const adminInfo = Cookies.get('adminInfo')
+    ? JSON.parse(Cookies.get('adminInfo')) : null
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/getRoleInfo`, {
+      headers: {
+        authorization: adminInfo ? `Bearer ${adminInfo.token}` : null,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setUser(data)
+      })
+  }, [])
+
+
   const [state, dispatch] = useReducer(reducer, initialState);
-  const value = { state, dispatch };
+  const value = { state, dispatch, user };
   return (
     <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
   );

@@ -165,18 +165,36 @@ const Uploader = ({ setImageUrl, imageUrl }) => {
       <aside className="flex flex-row flex-wrap mt-4">
         {imageUrl ? <>
           {
-            imageUrl?.map((image, i) => (
-              <img key={i}
+            Array.isArray(imageUrl) ? <>
+              {
+                imageUrl?.map((image, i) => (
+                  <img key={i}
+                    className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
+                    src={image}
+                    alt="product"
+                  />
+                ))
+              }
+            </>
+              :
+              <img
                 className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
-                src={image}
+                src={imageUrl}
                 alt="product"
               />
-            ))
           }
         </> : (
           thumbs
         )}
       </aside>
+
+      {/* imageUrl?.map((image, i) => (
+      <img key={i}
+        className="inline-flex border rounded-md border-gray-100 dark:border-gray-600 w-24 max-h-24 p-2"
+        src={image}
+        alt="product"
+      />
+      )) */}
 
 
       {/* <aside className="flex flex-row flex-wrap mt-4">

@@ -2,7 +2,7 @@ import requests from './httpService';
 
 const ProductServices = {
   getAllProducts() {
-    return requests.get('/products');
+    return requests.get('/products/getAllProducts/byRole');
   },
 
   getStockOutProducts() {

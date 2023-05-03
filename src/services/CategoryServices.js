@@ -1,8 +1,12 @@
+import Cookies from "js-cookie";
 import requests from "./httpService";
+
+// const { token, _id } = Cookies.get('adminInfo') ? JSON.parse(Cookies.get('adminInfo')) : null
+// console.log(token);
 
 const CategoryServices = {
   getAllCategory() {
-    return requests.get("/category");
+    return requests.get("/category/getAllCategories/byRole");
   },
 
   getCategoryById(id) {

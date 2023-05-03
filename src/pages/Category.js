@@ -24,10 +24,14 @@ import CategoryTable from "../components/category/CategoryTable";
 import SelectCategory from "../components/form/SelectCategory";
 import MainDrawer from "../components/drawer/MainDrawer";
 import CategoryDrawer from "../components/drawer/CategoryDrawer";
+import { AdminContext } from "../context/AdminContext";
 
 const Category = () => {
   const { toggleDrawer } = useContext(SidebarContext);
+  const { user } = useContext(AdminContext);
   const { data, loading } = useAsync(CategoryServices.getAllCategory);
+
+  console.log(user);
 
   const {
     categoryRef,
@@ -91,10 +95,14 @@ const Category = () => {
               <tr>
                 <TableCell>ID</TableCell>
                 <TableCell>Icon</TableCell>
-                <TableCell>Parent</TableCell>
+                {/* <TableCell>Parent</TableCell> */}
+                <TableCell>Children</TableCell>
                 <TableCell>Children</TableCell>
                 <TableCell>Type</TableCell>
-                <TableCell className="text-center">Published</TableCell>
+                {
+                  user?.role === "admin" && <TableCell className="text-center">Published</TableCell>
+                }
+
                 <TableCell className="text-right">Actions</TableCell>
               </tr>
             </TableHeader>

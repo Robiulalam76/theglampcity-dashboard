@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TableBody, TableRow, TableCell, Avatar } from '@windmill/react-ui';
 
 import MainModal from '../modal/MainModal';
@@ -7,9 +7,11 @@ import ShowHideButton from '../table/ShowHideButton';
 import CategoryDrawer from '../drawer/CategoryDrawer';
 import useToggleDrawer from '../../hooks/useToggleDrawer';
 import EditDeleteButton from '../table/EditDeleteButton';
+import { AdminContext } from '../../context/AdminContext';
 
 const CategoryTable = ({ categories }) => {
   const { serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
+  const { user } = useContext(AdminContext);
 
   return (
     <>
@@ -46,9 +48,13 @@ const CategoryTable = ({ categories }) => {
             </TableCell>
             <TableCell className="text-sm ">{parent.children.length}</TableCell>
             <TableCell className="text-sm">{parent.type}</TableCell>
-            <TableCell>
-              <ShowHideButton id={parent._id} status={parent.status} />
-            </TableCell>
+
+            {
+              user?.role === "admin" && <TableCell>
+                <ShowHideButton id={parent._id} status={parent.status} />
+              </TableCell>
+            }
+
             <TableCell>
               <EditDeleteButton
                 id={parent._id}

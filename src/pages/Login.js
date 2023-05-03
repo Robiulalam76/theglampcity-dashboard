@@ -9,10 +9,15 @@ import InputArea from '../components/form/InputArea';
 import ImageLight from '../assets/img/login-office.jpeg';
 import ImageDark from '../assets/img/login-office-dark.jpeg';
 import useLoginSubmit from '../hooks/useLoginSubmit';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const { onSubmit, register, handleSubmit, errors, loading } =
     useLoginSubmit();
+
+
+  // const { token, _id } = Cookies.get('adminInfo') ? JSON.parse(Cookies.get('adminInfo')) : null
+  // console.log("Admin INfo: ", token, _id);
 
   return (
     <>
