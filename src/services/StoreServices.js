@@ -2,7 +2,7 @@ import requests from "./httpService";
 
 const StoreServices = {
   getAllStore() {
-    return requests.get("/store");
+    return requests.get("/store/getAllStores/byRole");
   },
 
   getStoreById(id) {
