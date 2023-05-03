@@ -30,30 +30,35 @@ const useProductSubmit = (id) => {
     }
 
     const productData = {
-      // sku: data.sku,
       title: data.title,
-      titleSlug: data.titleSlug
-        ? data.titleSlug
+
+      titleSlug: data.titleSlug ? data.titleSlug.toLowerCase().replace("&", "").split(" ").join("-")
         : data.title.toLowerCase().replace("&", "").split(" ").join("-"),
+
       description: data.description,
+      storeName: data.store,
       parent: data.parent,
       slug: data.parent && data.parent.toLowerCase().replace("&", "").split(" ").join("-"),
-      // children: data.children,
-      type: data.type,
-      unit: data.unit,
-      // quantity: data.quantity,
       originalPrice: data.originalPrice,
       price: data.salePrice ? data.salePrice : data.originalPrice,
-      discount:
-        data.salePrice > 0 &&
+      children: data.children,
+      children_slug: data?.children.toLowerCase().replace("&", "").split(" ").join("-"),
+
+      discount: data.salePrice > 0 &&
         ((data.originalPrice - data.salePrice) / data.originalPrice) * 100,
+      images: imageUrl,
+
+      tag: JSON.stringify(tag),
+
+      // type: data.type,
+      // unit: data.unit,
+      // quantity: data.quantity,
+      // sku: data.sku,
       // image:
       //   "https://images.unsplash.com/photo-1657299156537-2fd96dc2446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      // images: imageUrl,
-      tag: JSON.stringify(tag),
     };
 
-    // console.log(imageUrl);
+    console.log("product data from form: ", productData);
 
     if (id) {
       ProductServices.updateProduct(id, productData)

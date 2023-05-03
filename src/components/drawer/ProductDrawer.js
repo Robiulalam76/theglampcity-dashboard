@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Textarea, Select } from "@windmill/react-ui";
 import ReactTagInput from "@pathofdev/react-tag-input";
@@ -15,6 +15,9 @@ import ChildrenCategory from "../category/ChildrenCategory";
 import ParentCategory from "../category/ParentCategory";
 import useProductSubmit from "../../hooks/useProductSubmit";
 import ParentStore from "../category/ParentStore";
+import CategoryServices from "../../services/CategoryServices";
+import useAsync from "../../hooks/useAsync";
+
 
 const ProductDrawer = ({ id }) => {
   const {
@@ -28,6 +31,13 @@ const ProductDrawer = ({ id }) => {
     tag,
     setTag,
   } = useProductSubmit(id);
+
+  const { data } = useAsync(CategoryServices.getAllCategory);
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const handleCategoryById = (id) => {
+    const getCategory = data?.find(cate => cate?._id === id)
+    setSelectedCategory(getCategory)
+  }
 
   return (
     <>
@@ -121,21 +131,61 @@ const ProductDrawer = ({ id }) => {
             </div>
 
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-              <LabelArea label="Shop Name" />
+              <LabelArea label="Store Name" />
               <div className="col-span-8 sm:col-span-4">
                 <Select
                   className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
-                  name="parent"
-                  {...register("parent", {
-                    required: "Product parent category is required!",
+                  name="store"
+                  {...register("store", {
+                    required: "Product store is required!",
                   })}
                 >
                   <option value="" defaultValue hidden>
-                    Select Shop Name
+                    Select Store
                   </option>
                   <ParentStore />
                 </Select>
+                <Error errorName={errors.store} />
+              </div>
+            </div>
+
+
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <LabelArea label="Product Category" />
+              <div className="col-span-8 sm:col-span-4">
+                <Select
+                  onClick={(e) => handleCategoryById(e.target.value)}
+                  className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
+                  name="parent"
+                  {...register("parent", {
+                    required: "Product Category is required!",
+                  })}
+                >
+                  <option value="" defaultValue hidden>
+                    Select Category
+                  </option>
+                  <ParentCategory selectedCategory={selectedCategory} />
+                </Select>
                 <Error errorName={errors.parent} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+              <LabelArea label="Category Chidren" />
+              <div className="col-span-8 sm:col-span-4">
+                <Select
+                  className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-white border-transparent focus:bg-white"
+                  name="children"
+                  {...register("children", {
+                    required: "children is required!",
+                  })}
+                >
+                  <option value="" defaultValue hidden>
+                    Select children
+                  </option>
+                  <ChildrenCategory selectedCategory={selectedCategory} />
+                </Select>
+                <Error errorName={errors.children} />
               </div>
             </div>
 
@@ -158,7 +208,7 @@ const ProductDrawer = ({ id }) => {
               </div>
             </div> */}
 
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label="Product Type" />
               <div className="col-span-8 sm:col-span-4">
                 <SelectOption
@@ -168,7 +218,7 @@ const ProductDrawer = ({ id }) => {
                 />
                 <Error errorName={errors.type} />
               </div>
-            </div>
+            </div> */}
 
             {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label="Flash Sale" />

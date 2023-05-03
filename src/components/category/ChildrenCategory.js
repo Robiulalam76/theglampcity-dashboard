@@ -4,7 +4,7 @@ import useAsync from '../../hooks/useAsync';
 import CategoryServices from '../../services/CategoryServices';
 
 
-const ChildrenCategory = ({ value }) => {
+const ChildrenCategory = ({ selectedCategory, value }) => {
   const [categories, setCategories] = useState([]);
 
   const { data } = useAsync(CategoryServices.getAllCategory);
@@ -21,14 +21,21 @@ const ChildrenCategory = ({ value }) => {
 
   return (
     <>
-      {categories.map((parent) => {
-        return parent.children.map((children) => (
-          <option key={children} value={children}>
-            {children}
-          </option>
-        ));
-      })}
+      {selectedCategory?.children.map((children) => (
+        <option key={children} value={children}>
+          {children}
+        </option>
+      ))}
     </>
+    // <>
+    //   {categories.map((parent) => {
+    //     return parent.children.map((children) => (
+    //       <option key={children} value={children}>
+    //         {children}
+    //       </option>
+    //     ));
+    //   })}
+    // </>
   );
 };
 

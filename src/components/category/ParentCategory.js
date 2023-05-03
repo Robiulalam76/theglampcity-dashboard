@@ -3,13 +3,13 @@ import React from "react";
 import useAsync from "../../hooks/useAsync";
 import CategoryServices from "../../services/CategoryServices";
 
-const ParentCategory = () => {
+const ParentCategory = ({ selectedCategory }) => {
   const { data } = useAsync(CategoryServices.getAllCategory); //   console.log(value);
   return (
     <>
       {data.map((parent) => (
-        <option key={parent._id} value={parent.parent}>
-          {parent.name}
+        <option key={parent._id} value={selectedCategory ? selectedCategory?.parent : parent?._id}>
+          {parent.parent}
         </option>
       ))}
     </>
