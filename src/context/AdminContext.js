@@ -30,6 +30,8 @@ export const AdminProvider = ({ children }) => {
   const adminInfo = Cookies.get('adminInfo')
     ? JSON.parse(Cookies.get('adminInfo')) : null
 
+  console.log(adminInfo);
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/getRoleInfo`, {
       headers: {

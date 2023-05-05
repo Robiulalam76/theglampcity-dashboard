@@ -8,6 +8,9 @@ const StoreServices = {
   getStoreById(id) {
     return requests.get(`/category/${id}`);
   },
+  updateStoreStatus(id, body) {
+    return requests.put(`/store/status/${id}`, body);
+  },
 
   addCategory(body) {
     return requests.post("/category/add", body);

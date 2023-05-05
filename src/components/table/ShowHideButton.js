@@ -6,6 +6,7 @@ import { notifySuccess, notifyError } from '../../utils/toast';
 import ProductServices from '../../services/ProductServices';
 import CategoryServices from '../../services/CategoryServices';
 import { SidebarContext } from '../../context/SidebarContext';
+import StoreServices from '../../services/StoreServices';
 
 const ShowHideButton = ({ id, status }) => {
   const location = useLocation();
@@ -30,6 +31,14 @@ const ShowHideButton = ({ id, status }) => {
 
     if (location.pathname === '/products') {
       ProductServices.updateStatus(id, { status: newStatus })
+        .then((res) => {
+          setIsUpdate(true);
+          notifySuccess(res.message);
+        })
+        .catch((err) => notifyError(err.message));
+    }
+    if (location.pathname === '/store') {
+      StoreServices.updateStoreStatus(id, { status: newStatus })
         .then((res) => {
           setIsUpdate(true);
           notifySuccess(res.message);
