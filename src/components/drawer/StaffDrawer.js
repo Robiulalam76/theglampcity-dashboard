@@ -10,6 +10,7 @@ import SelectRole from '../form/SelectRole';
 import DrawerButton from '../form/DrawerButton';
 import Uploader from '../image-uploader/Uploader';
 import useStaffSubmit from '../../hooks/useStaffSubmit';
+import SingleImageUploader from '../image-uploader/SingleImageUploader';
 
 const StaffDrawer = ({ id }) => {
   const { register, handleSubmit, onSubmit, errors, imageUrl, setImageUrl } =
@@ -38,7 +39,7 @@ const StaffDrawer = ({ id }) => {
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Staff Image" />
                   <div className="col-span-8 sm:col-span-4">
-                    <Uploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                    <SingleImageUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
                   </div>
                 </div>
 

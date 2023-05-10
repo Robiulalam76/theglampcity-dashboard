@@ -28,7 +28,7 @@ const AdminServices = {
     return requests.post('/admin', body);
   },
   getStaffById(id, body) {
-    return requests.post(`/admin/${id}`, body);
+    return requests.get(`/admin/${id}`, body);
   },
 
   updateStaff(id, body) {
