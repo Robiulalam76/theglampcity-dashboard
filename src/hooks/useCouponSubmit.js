@@ -17,6 +17,7 @@ const useCouponSubmit = (id) => {
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(imageUrl, "submit");
     if (!imageUrl) {
       notifyError('Icon is required!');
       return;

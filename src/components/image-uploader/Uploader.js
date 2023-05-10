@@ -45,7 +45,7 @@ const Uploader = ({ setImageUrl, imageUrl }) => {
   };
 
 
-  console.log("Image urls", imageUrl);
+  // console.log("Image urls", imageUrl);
 
   useEffect(() => {
     for (let i = 0; i < files.length; i++) {

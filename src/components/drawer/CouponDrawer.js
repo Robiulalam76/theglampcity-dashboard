@@ -10,6 +10,7 @@ import SelectOption from '../form/SelectOption';
 import DrawerButton from '../form/DrawerButton';
 import Uploader from '../image-uploader/Uploader';
 import useCouponSubmit from '../../hooks/useCouponSubmit';
+import SingleImageUploader from '../image-uploader/SingleImageUploader';
 
 const CouponDrawer = ({ id }) => {
   const { register, handleSubmit, onSubmit, errors, setImageUrl, imageUrl } =
@@ -37,7 +38,7 @@ const CouponDrawer = ({ id }) => {
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label="Coupon Banner Image" />
               <div className="col-span-8 sm:col-span-4">
-                <Uploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                <SingleImageUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
               </div>
             </div>
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
