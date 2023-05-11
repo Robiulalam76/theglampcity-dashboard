@@ -81,12 +81,12 @@ const Staff = () => {
                   Staff Role
                 </option>
                 <option value="Admin">Admin</option>
-                <option value="CEO">CEO</option>
+                {/* <option value="CEO">CEO</option>
                 <option value="Manager">Manager</option>
                 <option value="Accountant">Accountant</option>
                 <option value="Driver"> Driver </option>
                 <option value="Security Guard">Security Guard</option>
-                <option value="Deliver Person">Delivery Person</option>
+                <option value="Deliver Person">Delivery Person</option> */}
               </Select>
             </div>
 

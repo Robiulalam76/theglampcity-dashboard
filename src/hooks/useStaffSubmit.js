@@ -33,12 +33,13 @@ const useStaffSubmit = (id) => {
       email: data.email,
       password: data.password,
       phone: data.phone,
-      joiningDate: data.joiningDate,
       role: data.role,
-      image:
-        "https://images.unsplash.com/photo-1657299156537-2fd96dc2446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      // image: imageUrl,
+      image: imageUrl,
+      // joiningDate: data.joiningDate,
+      // image:
+      //   "https://images.unsplash.com/photo-1657299156537-2fd96dc2446e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     };
+    // console.log(staffData);
 
     if (id) {
       AdminServices.updateStaff(id, { email: adminInfo.email, data: staffData })
@@ -49,7 +50,7 @@ const useStaffSubmit = (id) => {
         .catch((err) => notifyError(err.message));
       closeDrawer();
     } else {
-      AdminServices.addStaff({ email: adminInfo.email, data: staffData })
+      AdminServices.addStaff(staffData)
         .then((res) => {
           setIsUpdate(true);
           notifySuccess(res.message);

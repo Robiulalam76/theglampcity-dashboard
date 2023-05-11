@@ -15,13 +15,13 @@ const SelectRole = ({ setRole, register, name, label }) => {
         <option value="" defaultValue hidden>
           Staff role
         </option>
-        <option value="Admin">Admin</option>
-        <option value="CEO">CEO</option>
+        <option value="admin">Admin</option>
+        {/* <option value="CEO">CEO</option>
         <option value="Manager">Manager</option>
         <option value="Accountant">Accountant</option>
         <option value="Driver"> Driver </option>
         <option value="Security Guard">Security Guard</option>
-        <option value="Deliver Person">Delivery Person</option>
+        <option value="Deliver Person">Delivery Person</option> */}
       </Select>
     </>
   );
