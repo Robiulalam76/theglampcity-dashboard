@@ -10,6 +10,7 @@ import myTheme from "./assets/theme/myTheme";
 import { AdminProvider } from "./context/AdminContext";
 import { SidebarProvider } from "./context/SidebarContext";
 import ThemeSuspense from "./components/theme/ThemeSuspense";
+import { MessageProvider } from "./context/MessageContext";
 // import * as serviceWorker from './serviceWorker';
 
 // if (process.env.NODE_ENV !== "production") {
@@ -19,13 +20,15 @@ import ThemeSuspense from "./components/theme/ThemeSuspense";
 
 ReactDOM.render(
   <AdminProvider>
-    <SidebarProvider>
-      <Suspense fallback={<ThemeSuspense />}>
-        <Windmill usePreferences theme={myTheme}>
-          <App />
-        </Windmill>
-      </Suspense>
-    </SidebarProvider>
+    <MessageProvider>
+      <SidebarProvider>
+        <Suspense fallback={<ThemeSuspense />}>
+          <Windmill usePreferences theme={myTheme}>
+            <App />
+          </Windmill>
+        </Suspense>
+      </SidebarProvider>
+    </MessageProvider>
   </AdminProvider>,
 
   document.getElementById("root")

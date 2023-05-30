@@ -33,13 +33,14 @@ export const AdminProvider = ({ children }) => {
   console.log(adminInfo);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/getRoleInfo`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/user/userinfo/me`, {
       headers: {
         authorization: adminInfo ? `Bearer ${adminInfo.token}` : null,
       },
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         setUser(data)
       })
   }, [])

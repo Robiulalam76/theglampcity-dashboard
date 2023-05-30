@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import ProductDetails from "../pages/ProductDetails";
+import StoreMessages from "../pages/Messages/StoreMessages";
 
 // use lazy for better code splitting
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -48,6 +49,10 @@ const routes = [
   {
     path: "/store",
     component: Store,
+  },
+  {
+    path: "/messages",
+    component: StoreMessages,
   },
   {
     path: "/customers",

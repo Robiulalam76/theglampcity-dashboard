@@ -38,6 +38,11 @@ const sidebar = [
     name: "Store",
   },
   {
+    path: "/messages",
+    icon: FiHome,
+    name: "Store",
+  },
+  {
     path: "/customers",
     icon: FiUsers,
     name: "Customers",
