@@ -8,6 +8,7 @@ import {
   FiList,
   FiSettings,
   FiHome,
+  FiMessageSquare,
 } from "react-icons/fi";
 /**
  * ⚠ These are used just to render the Sidebar!
@@ -39,8 +40,8 @@ const sidebar = [
   },
   {
     path: "/messages",
-    icon: FiHome,
-    name: "Store",
+    icon: FiMessageSquare,
+    name: "Messages",
   },
   {
     path: "/customers",

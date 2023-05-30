@@ -32,7 +32,7 @@ const SingleMessage = ({ message }) => {
                                 store?.logo ? <img className="object-cover w-10 h-10 rounded-full"
                                     src={store?.logo} alt="username" />
                                     :
-                                    <span>{store?.name?.slice(0, 1)}</span>
+                                    <div className='w-full h-full'>{store?.name?.slice(0, 1)}</div>
                             }
                         </button>
                         {/* <a href="#" class="block text-xs hover:underline">{user?.name}</a> */}
@@ -62,7 +62,7 @@ const SingleMessage = ({ message }) => {
                                     receiverData?.image ? <img className="object-cover w-10 h-10 rounded-full"
                                         src={receiverData?.image} alt="username" />
                                         :
-                                        <span>{receiverData?.name?.slice(0, 1)}</span>
+                                        <div className='w-full h-full'>{receiverData?.name?.slice(0, 1)}</div>
                                 }
                             </button>
                             {/* <a href="#" class="block text-xs hover:underline">{receiverData?.name}</a> */}

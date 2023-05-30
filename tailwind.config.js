@@ -22,4 +22,9 @@ module.exports = windmill({
       },
     },
   },
+  variants: {
+    extend: {
+      display: ['group-focus', 'group-hover'],
+    },
+  },
 });

@@ -18,6 +18,7 @@ const MyAccountMessageSidbarDrawer = () => {
             parent={null}
             level={null}
             placement={'left'}
+            width={300}
         >
 
             <div className="">

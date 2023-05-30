@@ -10,7 +10,7 @@ import StoreCard from '../../components/cards/StoreCard';
 
 const StoreMessages = () => {
     const { user } = useContext(AdminContext)
-    const { receiverData, chatId, fullScreen, store, setStore } = useContext(MessageContext)
+    const { receiverData, chatId, fullScreen, store, setStore, setOpenMyAccountMessageSidebar } = useContext(MessageContext)
 
     const { data } = useAsync(StoreServices.getAllStore)
     console.log(store);
@@ -45,9 +45,10 @@ const StoreMessages = () => {
 
                         </div>
                     </div>
+                    <button onClick={() => setOpenMyAccountMessageSidebar(true)}>open</button>
                 </div>
                     :
-                    <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 w-full'>
+                    <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 w-full mt-8'>
                         {
                             data?.map(store => <StoreCard store={store} />)
                         }

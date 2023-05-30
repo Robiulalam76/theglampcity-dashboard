@@ -1,15 +1,11 @@
-import { AuthContext } from '@/ContextAPI/AuthProvider';
-import { setCartItems } from '@/Slices/controllerSlice';
-import DeleteModal from '@/components/Modals/DeleteModal';
-import { Button, ButtonGroup } from '@material-tailwind/react';
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { MessageContext } from '../../../context/MessageContext';
+import { Button } from '@windmill/react-ui';
 
 const MyRequestCard = ({ data, refetch }) => {
-    const { user } = useContext(AuthContext)
+    const { store } = useContext(MessageContext)
     const [product, setProduct] = useState(null)
     const [deleteModal, setDeleteModal] = useState(false)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         fetch(`http://localhost:5055/api/products/${data?.productId}`)
@@ -27,11 +23,11 @@ const MyRequestCard = ({ data, refetch }) => {
 
     // get all cart products
     const handleGetCartProducts = () => {
-        fetch(`http://localhost:5055/api/cartProduct/${user?._id}`)
-            .then(res => res.json())
-            .then(data => {
-                dispatch(setCartItems(data));
-            })
+        // fetch(`http://localhost:5055/api/cartProduct/${user?._id}`)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         dispatch(setCartItems(data));
+        //     })
     }
 
 
@@ -59,7 +55,7 @@ const MyRequestCard = ({ data, refetch }) => {
     const handleAddCart = () => {
         const addCartProduct = {
             productId: product?._id,
-            userId: user?._id,
+            userId: store?._id,
             title: product?.title,
             description: product?.description,
             price: data?.price,
@@ -91,7 +87,7 @@ const MyRequestCard = ({ data, refetch }) => {
                 <h1 className='text-black font-bold text-xl'>{product?.title}</h1>
                 <p>Quantity: {data?.quantity}</p>
                 <p>Amount: {data?.price}</p>
-                <ButtonGroup className='py-1'>
+                <div className='py-1'>
                     {
                         data?.requestType === "store" ? <Button onClick={() => setDeleteModal(data?.status === "false" && true)}
                             className={`py-2 
@@ -109,14 +105,14 @@ const MyRequestCard = ({ data, refetch }) => {
                             :
                             <Button className="bg-primary py-2">Wait for Approve</Button>
                     }
-                </ButtonGroup>
+                </div>
             </div>
 
-
+            {/* 
             {
                 deleteModal && <DeleteModal open={deleteModal} close={setDeleteModal}
                     endpoint={`offer/${data?._id}`} refetch={handleRefetch} />
-            }
+            } */}
 
         </div>
     );

@@ -17,7 +17,7 @@ const MyOffers = ({ storeId, buyerId, setTotalOffers }) => {
         handleGetOffers()
     }, [storeId])
 
-    // console.log(offers);
+    console.log(storeId, buyerId, setTotalOffers);
 
 
     return (

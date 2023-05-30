@@ -1,7 +1,6 @@
-import ProductImageCorousel from '@/components/ProductCards/ProductImageCorousel';
-import { Button } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ProductImageCorousel from '../cards/ProductImageCorousel';
 
 const SelectProductForOffer = ({ handleSelectProduct }) => {
     const [products, setProducts] = useState(null)

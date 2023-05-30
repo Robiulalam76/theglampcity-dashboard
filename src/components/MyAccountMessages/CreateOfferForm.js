@@ -1,10 +1,10 @@
-import { AuthContext } from '@/ContextAPI/AuthProvider';
-import { Button } from '@material-tailwind/react';
 import React, { useContext, useEffect, useState } from 'react';
+import { MessageContext } from '../../context/MessageContext';
+import { Button } from '@windmill/react-ui';
 import { useForm } from 'react-hook-form';
 
 const CreateOfferForm = ({ productId, setClose }) => {
-    const { user } = useContext(AuthContext)
+    const { store } = useContext(MessageContext)
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [product, setProduct] = useState(null)
 
@@ -20,7 +20,7 @@ const CreateOfferForm = ({ productId, setClose }) => {
     const handleCreateOffer = (data) => {
         data["productId"] = product?._id
         data["storeId"] = product?.storeId
-        data["buyerId"] = user?._id
+        // data["buyerId"] = user?._id
         data["requestType"] = "buyer"
         // console.log(data);
 
@@ -35,8 +35,9 @@ const CreateOfferForm = ({ productId, setClose }) => {
             .then(data => {
                 setClose("")
             })
-
     }
+
+    console.log(product);
 
     return (
         <form onSubmit={handleSubmit(handleCreateOffer)} className='p-2 md:px-6'>
