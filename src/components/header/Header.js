@@ -55,7 +55,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="z-40 py-4 bg-white shadow-sm dark:bg-gray-800">
+      <header className="z-20 py-4 bg-white shadow-sm dark:bg-gray-800">
         <div className="container flex items-center justify-between h-full px-6 mx-auto text-green-500 dark:text-green-500">
           {/* <!-- Mobile hamburger --> */}
           <button

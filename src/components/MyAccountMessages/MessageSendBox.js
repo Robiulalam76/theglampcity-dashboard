@@ -1,55 +1,25 @@
-import React, { useContext, useState } from 'react';
-// import {
-//     IconButton,
-//     SpeedDial,
-//     SpeedDialHandler,
-//     SpeedDialContent,
-//     SpeedDialAction,
-//     Button,
-//     Accordion,
-//     AccordionBody,
-//     Badge
-// } from "@material-tailwind/react";
-// import {
-//     PlusIcon,
-// } from "@heroicons/react/24/outline";
+import React, { useContext, useEffect, useState } from 'react';
 import { AdminContext } from '../../context/AdminContext';
 import { MessageContext } from '../../context/MessageContext';
-import { Badge, Button, Modal, ModalBody, ModalFooter } from '@windmill/react-ui';
+import { Button, } from '@windmill/react-ui';
 import CreateOfferForm from './CreateOfferForm';
 import SelectProductForOffer from './SelectProductForOffer';
-import MyOffers from './OffersPanels/MyOffers';
+import BuyerOfferRequest from './OffersPanels/BuyerOfferRequest';
 import MyRequestOffers from './OffersPanels/MyRequestOffers';
-// import CreateOfferForm from './CreateOfferForm';
-// import SelectProductForOffer from './SelectProductForOffer';
-// import MyOffers from './OffersPanels/MyOffers';
-// import MyRequestOffers from './OffersPanels/MyRequestOffers';
-// import { useSelector } from 'react-redux';
-// import { AuthContext } from '@/ContextAPI/AuthProvider';
 
-const data = [
-    {
-        label: "Offers",
-        value: "offers"
-    },
-    {
-        label: "Request",
-        value: "request"
-    },
-];
+const data = ["Buyer Request", "Send Offer"];
 
 const MessageSendBox = ({ sendMessage }) => {
     const { user } = useContext(AdminContext)
-    const { receiverData, store, chatId } = useContext(MessageContext)
-    const [totalOffers, setTotalOffers] = useState("0")
+    const { receiverData, store } = useContext(MessageContext)
+    const [totalOffers, setTotalOffers] = useState([])
     const [messageText, setMessageText] = useState("")
     const [productId, setProductId] = useState("");
-    const [tab, setTab] = useState("offers")
-
-    // console.log(messageText, user);
+    const [tab, setTab] = useState("Buyer Request")
 
     const [openOffers, setOpenOffers] = useState(false);
     const [openCreateOffer, setOpenCreateOffer] = useState(false);
+
     const handleOffer = (data) => {
         if (data === "openoffer") {
             setOpenCreateOffer(false)
@@ -66,35 +36,60 @@ const MessageSendBox = ({ sendMessage }) => {
         setOpenCreateOffer(false)
     }
 
+    const handleGetOffers = () => {
+        fetch(`http://localhost:5055/api/offer/myrequest/${store?._id}/${receiverData?._id}/buyer/true`)
+            .then(res => res.json())
+            .then(data => {
+                setTotalOffers(data)
+            })
+    }
+
+    useEffect(() => {
+        handleGetOffers()
+    }, [store?._id, receiverData?._id])
+
 
     return (
         <div class="p-4">
 
             {
                 openOffers && (
-                    <div className='fixed w-full h-full bg-white top-0 left-0 bottom-0 right-0 z-50'>
-                        <div className='grid grid-cols-2 min-w-[800px] h-full' >
-                            {data.map(({ label, value }) => (
-                                <button onClick={() => setTab(value)}
-                                    className={`w-full rounded-none h-10
-                            ${tab === value ? "bg-green-500 text-white" : "bg-white text-black"}`} >
-                                    {label}
-                                </button>
-                            ))}
+                    <div className='fixed w-full h-full bg-gray-600 bg-opacity-50 top-0 left-0 bottom-0 right-0 z-50 md:p-8'>
+                        <div className='w-full h-full bg-white relative overflow-y-auto overflow-hidden' >
+                            <div className='grid grid-cols-2 w-full h-10 border-y' >
+                                {
+                                    data.map(item => (
+                                        <button onClick={() => setTab(item)}
+                                            className={`w-full rounded-none h-10 outline-none focus:outline-none
+                            ${tab === item ? "bg-green-500 text-white" : "bg-white text-black"}`} >
+                                            {item}
+                                        </button>
+                                    ))
+                                }
+                            </div>
+
+                            {tab === "Buyer Request" && <BuyerOfferRequest storeId={store?._id} buyerId={receiverData?._id} offers={totalOffers} refetch={handleGetOffers} />}
+                            {tab === "Send Offer" && <MyRequestOffers storeId={store?._id} buyerId={receiverData?._id} />}
+                            <button onClick={() => setOpenOffers(false)}
+                                className='absolute bottom-0 right-0 w-40 h-10 bg-pink-600 hover:bg-pink-700 text-white flex justify-center items-center' >
+                                <span>Close</span>
+                            </button>
                         </div>
 
-                        {tab === "offers" && <MyOffers storeId={store?._id} buyerId={receiverData?._id} setTotalOffers={setTotalOffers} />}
-                        {tab === "request" && <MyRequestOffers storeId={store?._id} buyerId={receiverData?._id} />}
                     </div>
                 )
             }
 
             {
                 openCreateOffer && (
-                    <div className='fixed w-full h-full bg-white top-0 left-0 bottom-0 right-0 z-50'>
-                        <div className='w-full' >
-                            {productId && <CreateOfferForm productId={productId} setClose={handleclose} />}
-                            {!productId && <SelectProductForOffer handleSelectProduct={setProductId} />}
+                    <div className='fixed w-full h-full bg-gray-600 bg-opacity-50 top-0 left-0 bottom-0 right-0 z-50 md:p-8'>
+                        <div className='w-full h-full bg-white relative' >
+                            {productId && <CreateOfferForm buyerId={receiverData?._id} productId={productId} setClose={handleclose} />}
+                            {!productId && <SelectProductForOffer storeId={store?._id} handleSelectProduct={setProductId} />}
+                            <button onClick={() => handleclose()}
+                                className='absolute bottom-0 right-0 w-40 h-10 bg-pink-600 hover:bg-pink-700 text-white flex justify-center items-center' >
+                                <span>Close</span>
+                            </button>
                         </div>
                     </div>
                 )
@@ -103,7 +98,7 @@ const MessageSendBox = ({ sendMessage }) => {
             <div className='flex items-center gap-2 w-fit h-10'>
                 <div class="relative m-6 inline-flex w-fit">
                     <div
-                        class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-2.5 text-xs">{totalOffers}</div>
+                        class="absolute bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-2.5 text-xs">{totalOffers?.length > 0 ? totalOffers?.length : 0}</div>
                     <Button className="rounded-md" onClick={() => handleOffer("openoffer")} >Offer</Button>
                 </div>
                 <Button className="rounded-md" onClick={() => handleOffer("createoffer")} >Create</Button>

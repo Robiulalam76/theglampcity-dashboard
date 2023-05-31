@@ -3,7 +3,7 @@ import { MessageContext } from '../../context/MessageContext';
 import { Button } from '@windmill/react-ui';
 import { useForm } from 'react-hook-form';
 
-const CreateOfferForm = ({ productId, setClose }) => {
+const CreateOfferForm = ({ buyerId, productId, setClose }) => {
     const { store } = useContext(MessageContext)
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [product, setProduct] = useState(null)
@@ -16,13 +16,12 @@ const CreateOfferForm = ({ productId, setClose }) => {
             })
     }, [])
 
-    // console.log(product);
     const handleCreateOffer = (data) => {
         data["productId"] = product?._id
-        data["storeId"] = product?.storeId
-        // data["buyerId"] = user?._id
-        data["requestType"] = "buyer"
-        // console.log(data);
+        data["storeId"] = store?._id
+        data["buyerId"] = buyerId
+        data["requestType"] = "store"
+        data["approved"] = "true"
 
         fetch(`http://localhost:5055/api/offer`, {
             method: "POST",
@@ -37,8 +36,6 @@ const CreateOfferForm = ({ productId, setClose }) => {
             })
     }
 
-    console.log(product);
-
     return (
         <form onSubmit={handleSubmit(handleCreateOffer)} className='p-2 md:px-6'>
             <div className='flex justify-between text-center'>
@@ -49,7 +46,7 @@ const CreateOfferForm = ({ productId, setClose }) => {
             </div>
             <div>
                 <div className='flex flex-col md:flex-row gap-4 w-full'>
-                    <img className='w-full md:w-72 h-52 object-cover' src={product?.images[0]} alt="" />
+                    <img className='w-64 h-64 mx-auto object-cover' src={product?.images[0]} alt="" />
                     <div className='flex flex-col gap-4 w-full '>
                         <div className='flex flex-col w-full'>
                             <span className='text-sm'>Product Name</span>

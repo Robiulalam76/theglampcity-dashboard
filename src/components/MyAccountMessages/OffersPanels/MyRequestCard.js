@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MessageContext } from '../../../context/MessageContext';
 import { Button } from '@windmill/react-ui';
+import DeleteModal from '../../modal/DeleteModal';
 
 const MyRequestCard = ({ data, refetch }) => {
     const { store } = useContext(MessageContext)
@@ -15,104 +16,51 @@ const MyRequestCard = ({ data, refetch }) => {
             })
     }, [data?.productId])
 
-
-    const handleRefetch = () => {
-        refetch && refetch()
-    }
-
-
-    // get all cart products
-    const handleGetCartProducts = () => {
-        // fetch(`http://localhost:5055/api/cartProduct/${user?._id}`)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         dispatch(setCartItems(data));
-        //     })
-    }
-
-
-    const handleUpdateOffer = () => {
-        handleGetCartProducts()
-        const updateData = {
-            status: "true"
-        }
-        if (data?.status === "false" && data?.approved === "true") {
-            fetch(`http://localhost:5055/api/offer/${data?._id}`, {
-                method: "PATCH",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(updateData)
+    const handleApprove = () => {
+        fetch(`http://localhost:5055/api/offer/${data?._id}`, {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ approved: "true" })
+        })
+            .then(res => res.json())
+            .then(data => {
+                refetch && refetch()
             })
-                .then(res => res.json())
-                .then(data => {
-                    refetch && refetch()
-                })
-        }
-    }
-
-
-    const handleAddCart = () => {
-        const addCartProduct = {
-            productId: product?._id,
-            userId: store?._id,
-            title: product?.title,
-            description: product?.description,
-            price: data?.price,
-            images: product?.images,
-        }
-        if (data?.status === "false" && data?.approved === "true") {
-
-            fetch(`http://localhost:5055/api/cartProduct`, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(addCartProduct)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data?.status === "success") {
-                        handleUpdateOffer()
-                    }
-                })
-        }
     }
 
 
     return (
-        <div className='flex flex-col justify-between bg-white h-fit'>
-            <img className='h-28 object-cover' src={product?.images[0]} alt="" />
+        <div className='flex flex-col justify-between bg-white h-64 border' >
+            <img className='h-24 w-24 mx-auto object-cover' src={product?.images[0]} alt="" />
             <div className='p-1'>
                 <h1 className='text-black font-bold text-xl'>{product?.title}</h1>
                 <p>Quantity: {data?.quantity}</p>
                 <p>Amount: {data?.price}</p>
                 <div className='py-1'>
                     {
-                        data?.requestType === "store" ? <Button onClick={() => setDeleteModal(data?.status === "false" && true)}
-                            className={`py-2 
-                        ${data?.status === "true" ? "bg-blue-gray-600 text-white" : "bg-red-600"}`}>Cancel</Button>
-                            :
-                            <Button onClick={() => setDeleteModal(data?.status === "false" && true)} className="bg-red-600 py-2" >Delete</Button>
+                        data?.requestType === "store" && <Button onClick={() => setDeleteModal(data?.status === "false" && true)}
+                            className="bg-red-600 py-2" >Delete</Button>
                     }
                     {
-                        data?.approved === "true" ? <Button onClick={() => handleAddCart()}
+                        data?.approved === "true" ? <Button
                             className={`py-2 ${data?.status === "true" ? "bg-blue-gray-600 text-white" : "bg-primary"}`}>
                             {
-                                data?.status === "true" ? "Cart Added" : "Add Cart"
+                                data?.status === "true" ? "Cart Added" : "Accepted"
                             }
                         </Button>
                             :
-                            <Button className="bg-primary py-2">Wait for Approve</Button>
+                            <Button onClick={() => handleApprove()} className="bg-primary py-2">Approve</Button>
                     }
                 </div>
             </div>
 
-            {/* 
+
             {
                 deleteModal && <DeleteModal open={deleteModal} close={setDeleteModal}
-                    endpoint={`offer/${data?._id}`} refetch={handleRefetch} />
-            } */}
+                    endpoint={`offer/${data?._id}`} refetch={refetch} />
+            }
 
         </div>
     );
