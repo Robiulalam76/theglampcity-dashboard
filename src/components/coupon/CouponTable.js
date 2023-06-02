@@ -53,10 +53,10 @@ const CouponTable = ({ coupons }) => {
                 {coupon.discountPercentage}%
               </span>{' '}
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
               {' '}
               <span className="text-sm"> {coupon.productType}</span>{' '}
-            </TableCell>
+            </TableCell> */}
 
             <TableCell className="align-middle ">
               {dayjs().isAfter(dayjs(coupon.endTime)) ? (

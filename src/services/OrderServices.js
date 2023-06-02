@@ -1,6 +1,9 @@
 import requests from './httpService';
 
 const OrderServices = {
+  getAllOrders(storeId) {
+    return requests.get('/store/:storeId', body, headers);
+  },
   getAllOrders(body, headers) {
     return requests.get('/orders', body, headers);
   },

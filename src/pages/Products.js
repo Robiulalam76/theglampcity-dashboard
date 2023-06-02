@@ -31,7 +31,7 @@ import ProductDrawer from "../components/drawer/ProductDrawer";
 const Products = () => {
   const { toggleDrawer } = useContext(SidebarContext);
   const { data, loading } = useAsync(ProductServices.getAllProducts);
-
+  console.log(data);
   const {
     searchRef,
     setFilter,
@@ -47,7 +47,45 @@ const Products = () => {
   } = useFilter(data);
 
 
-  console.log(dataTable);
+  // const [stores, setStores] = useState([])
+
+  // const [storeId, setStoreId] = useState("")
+  // const [product, setProduct] = useState(null)
+  // const [products, setProducts] = useState([]);
+
+  // const getProducts = (id) => {
+  //   fetch(`http://localhost:5055/api/products/store/${id}`)
+  //     .then(res => res.json())
+  //     .then(data => setProducts(data))
+  // }
+
+  // useEffect(() => {
+  //   getProducts(stores[0]?._id)
+  // }, [stores]);
+
+  // const handleSetStoreId = (id) => {
+  //   setStoreId(id)
+  //   getProducts(id)
+  // }
+
+
+  // console.log(products);
+
+  // const adminInfo = Cookies.get('adminInfo')
+  //   ? JSON.parse(Cookies.get('adminInfo')) : null
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:5055/api/store/getAllStores/byrole`, {
+  //     headers: {
+  //       authorization: `Bearer ${adminInfo?.token}`
+  //     }
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => setStores(data));
+  // }, []);
+
+  // console.log(stores);
+
 
   return (
     <>

@@ -85,7 +85,7 @@ const Coupons = () => {
                 <TableCell>Campaigns Name</TableCell>
                 <TableCell>Code</TableCell>
                 <TableCell>Percentage</TableCell>
-                <TableCell>Product Type</TableCell>
+                {/* <TableCell>Product Type</TableCell> */}
                 <TableCell>Status</TableCell>
                 <TableCell className="text-right">Actions</TableCell>
               </tr>

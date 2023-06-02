@@ -12,7 +12,7 @@ const OrderTable = ({ orders }) => {
   return (
     <>
       <TableBody>
-        {orders?.map((order, i) => (
+        {orders && orders?.map((order, i) => (
           <TableRow key={i + 1}>
             <TableCell>
               <span className="font-semibold uppercase text-xs">{i + 1}</span>
@@ -24,11 +24,11 @@ const OrderTable = ({ orders }) => {
             </TableCell>
 
             <TableCell>
-              <span className="text-sm">{order.address.substring(0, 25)}</span>
+              <span className="text-sm">{order.address.address.substring(0, 25)}</span>
             </TableCell>
             <TableCell>
               {' '}
-              <span className="text-sm">{order.contact}</span>{' '}
+              <span className="text-sm">{order.address?.mobileNumber}</span>{' '}
             </TableCell>
             <TableCell>
               <span className="text-sm font-semibold">
@@ -38,18 +38,18 @@ const OrderTable = ({ orders }) => {
             <TableCell>
               {' '}
               <span className="text-sm font-semibold">
-                ${Math.round(order.total)}.00
+                ${Math.round(order.totalPayment)}.00
               </span>{' '}
             </TableCell>
-            <TableCell className="text-center text-xs">
+            {/* <TableCell className="text-xs">
               <Status status={order.status} />
-            </TableCell>
-            <TableCell className="text-center">
+            </TableCell> */}
+            <TableCell className="">
               <SelectStatus id={order._id} />
             </TableCell>
-            <TableCell className="text-right flex justify-end">
+            <TableCell className="flex justify-center">
               <div className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
-                {' '}
+                {/* {' '} */}
                 <Link to={`/order/${order._id}`}>
                   <Tooltip
                     id="view"
