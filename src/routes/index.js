@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import ProductDetails from "../pages/ProductDetails";
 import StoreMessages from "../pages/Messages/StoreMessages";
+import Cookies from "js-cookie";
 
 // use lazy for better code splitting
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -29,6 +30,9 @@ const EditProfile = lazy(() => import("../pages/EditProfile"));
 //  * `routes/sidebar.js`
  */
 
+const adminInfo = Cookies.get('adminInfo')
+  ? JSON.parse(Cookies.get('adminInfo')) : null
+
 const routes = [
   {
     path: "/dashboard",
@@ -50,14 +54,16 @@ const routes = [
     path: "/store",
     component: Store,
   },
-  {
+
+  adminInfo?.role === "seller" && {
     path: "/messages",
     component: StoreMessages,
   },
-  {
+  adminInfo?.role === "admin" && {
     path: "/customers",
     component: Customers,
   },
+
   {
     path: "/customer-order/:id",
     component: CustomerOrder,
@@ -71,7 +77,7 @@ const routes = [
     component: Orders,
   },
   {
-    path: "/order/:id",
+    path: "/orders/:id",
     component: OrderInvoice,
   },
   {

@@ -28,8 +28,10 @@ const OrderInvoice = () => {
   const { id } = useParams();
   const printRef = useRef();
 
+
   const { data, loading } = useAsync(() => OrderServices.getOrderById(id));
 
+  // console.log(data);
   return (
     <>
       <PageTitle>Invoice</PageTitle>
@@ -47,7 +49,7 @@ const OrderInvoice = () => {
                   Status:{' '}
                   <span className="pl-2 font-medium text-xs capitalize">
                     {' '}
-                    <Status status={data.status} />
+                    <Status status={data.shippingStatus} />
                   </span>
                 </p>
               </h1>
@@ -70,9 +72,7 @@ const OrderInvoice = () => {
                   Date
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {data.createdAt !== undefined && (
-                    <span>{dayjs(data?.createdAt).format('MMMM D, YYYY')}</span>
-                  )}
+                  <span>{dayjs(data?.orderDate).format('MMMM D, YYYY')}</span>
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
@@ -80,7 +80,7 @@ const OrderInvoice = () => {
                   Invoice No
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  #10012
+                  {data?.orderNumber}
                 </span>
               </div>
               <div className="flex flex-col lg:text-right text-left">
@@ -88,11 +88,11 @@ const OrderInvoice = () => {
                   Invoice To.
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 block">
-                  {data.name}
+                  {data.address?.name}
                   <br />
-                  {data.address.substring(0, 25)}
+                  {data.address.address.substring(0, 25)}
                   <br />
-                  {data.city}, {data.country}, {data.zipCode}
+                  {data.address?.city}, {data.address?.country}
                 </span>
               </div>
             </div>
@@ -135,7 +135,7 @@ const OrderInvoice = () => {
                   Shipping Cost
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
-                  ${Math.round(data.shippingCost)}.00
+                  ${Math.round(data.totalPrice)}.00
                 </span>
               </div>
               <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
@@ -143,7 +143,7 @@ const OrderInvoice = () => {
                   Discount
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400 font-semibold font-serif block">
-                  ${Math.round(data.discount)}.00
+                  ${Math.round(data.toalDiscount)}.00
                 </span>
               </div>
               <div className="flex flex-col sm:flex-wrap">
@@ -151,7 +151,7 @@ const OrderInvoice = () => {
                   Total Amount
                 </span>
                 <span className="text-xl font-serif font-bold text-red-500 dark:text-green-500 block">
-                  ${Math.round(data.total)}.00
+                  ${Math.round(data.totalPayment)}.00
                 </span>
               </div>
             </div>

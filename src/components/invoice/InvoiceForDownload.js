@@ -137,17 +137,17 @@ const InvoiceForDownload = ({ data }) => {
               </Text>
               <Text style={styles.info}>
                 Status :{' '}
-                {data.status === 'Pending' && (
-                  <span style={{ color: '#eab308' }}>{data.status}</span>
+                {data.status === 'shopping soon' && (
+                  <span style={{ color: '#eab308' }}>{data.shippingStatus}</span>
                 )}
-                {data.status === 'Processing' && (
-                  <span style={{ color: '#14b8a6' }}>{data.status}</span>
+                {data.status === 'shipped' && (
+                  <span style={{ color: '#14b8a6' }}>{data.shippingStatus}</span>
                 )}
-                {data.status === 'Delivered' && (
-                  <span style={{ color: '#22c55e' }}>{data.status}</span>
+                {data.status === 'out for delivery' && (
+                  <span style={{ color: '#22c55e' }}>{data.shippingStatus}</span>
                 )}
-                {data.status === 'Cancel' && (
-                  <span style={{ color: '#f43f5e' }}>{data.status}</span>
+                {data.status === 'delivered' && (
+                  <span style={{ color: '#f43f5e' }}>{data.shippingStatus}</span>
                 )}
               </Text>
             </View>
@@ -164,21 +164,19 @@ const InvoiceForDownload = ({ data }) => {
             <View>
               <Text style={styles.title}>DATE</Text>
               <Text style={styles.info}>
-                {data.createdAt !== undefined && (
-                  <span>{dayjs(data?.createdAt).format('MMMM D, YYYY')}</span>
-                )}
+                <span>{dayjs(data?.orderDate).format('MMMM D, YYYY')}</span>
               </Text>
             </View>
             <View>
               <Text style={styles.title}>INVOICE NO</Text>
-              <Text style={styles.info}>#10012</Text>
+              <Text style={styles.info}>{data?.orderNumber}</Text>
             </View>
             <View>
               <Text style={styles.title}>INVOICE TO</Text>
               <Text style={styles.info}>{data.name}</Text>
-              <Text style={styles.info}> {data.address.substring(0, 25)}</Text>
+              <Text style={styles.info}> {data.address?.address.substring(0, 25)}</Text>
               <Text style={styles.info}>
-                {data.city}, {data.country}, {data.zipCode}
+                {data.address?.city}, {data.address?.country}
               </Text>
             </View>
           </View>
@@ -212,13 +210,13 @@ const InvoiceForDownload = ({ data }) => {
                 </Text>
               </View>
             </View>
-            {data?.cart?.map((item, i) => (
+            {data?.prodcuts?.map((item, i) => (
               <View key={i} style={styles.tableRow}>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{i + 1} </Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.title} </Text>
+                  <Text style={styles.tableCell}>{item.name} </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
@@ -235,7 +233,7 @@ const InvoiceForDownload = ({ data }) => {
 
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    <span style={styles.amount}>${item.itemTotal}.00</span>{' '}
+                    <span style={styles.amount}>${item.price}.00</span>{' '}
                   </Text>
                 </View>
               </View>
@@ -250,17 +248,17 @@ const InvoiceForDownload = ({ data }) => {
             <View>
               <Text style={styles.title}>Shipping Cost</Text>
               <Text style={styles.info}>
-                ${Math.round(data.shippingCost)}.00
+                ${Math.round(data.totalPrice)}.00
               </Text>
             </View>
             <View>
               <Text style={styles.title}>Discount</Text>
-              <Text style={styles.info}> ${Math.round(data.discount)}.00</Text>
+              <Text style={styles.info}> ${Math.round(data.totalDiscount)}.00</Text>
             </View>
 
             <View>
               <Text style={styles.title}>Total Amount</Text>
-              <Text style={styles.amount}>${Math.round(data.total)}.00</Text>
+              <Text style={styles.amount}>${Math.round(data.totalPayment)}.00</Text>
             </View>
           </View>
         </Page>

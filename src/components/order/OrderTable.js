@@ -1,14 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as dayjs from 'dayjs';
-import { TableCell, TableBody, TableRow } from '@windmill/react-ui';
+import { TableCell, TableBody, TableRow, Select } from '@windmill/react-ui';
 
 import Status from '../table/Status';
 import { FiEye } from 'react-icons/fi';
 import Tooltip from '../tooltip/Tooltip';
 import SelectStatus from '../form/SelectStatus';
 
-const OrderTable = ({ orders }) => {
+const OrderTable = ({ orders, getProducts, storeId }) => {
+
+
+  const handleUpdateStaus = (input, storeId, orderId) => {
+    fetch(`http://localhost:5055/api/order/update/status/${storeId}/${orderId}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ shippingStatus: input })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        getProducts && getProducts(storeId)
+      })
+  }
   return (
     <>
       <TableBody>
@@ -45,12 +61,20 @@ const OrderTable = ({ orders }) => {
               <Status status={order.status} />
             </TableCell> */}
             <TableCell className="">
-              <SelectStatus id={order._id} />
+              <Select
+                onChange={(e) => handleUpdateStaus(e.target.value, order?.store, order?._id)}
+                className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                <option selected={order?.shippingStatus === "shopping soon"} value="shopping soon">shopping soon</option>
+                <option selected={order?.shippingStatus === "shipped"} value="shipped">shipped</option>
+                <option selected={order?.shippingStatus === "out for delivery"} value="out for delivery">out for delivery</option>
+                <option selected={order?.shippingStatus === "delivered"} value="delivered">delivered</option>
+              </Select>
             </TableCell>
             <TableCell className="flex justify-center">
               <div className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
                 {/* {' '} */}
-                <Link to={`/order/${order._id}`}>
+                <Link to={`/orders/${order._id}`}>
                   <Tooltip
                     id="view"
                     Icon={FiEye}

@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import {
   FiGrid,
   FiShoppingBag,
@@ -17,6 +18,11 @@ import {
  * If you're looking to actual Router routes, go to
  * `routes/index.js`
  */
+
+const adminInfo = Cookies.get('adminInfo')
+  ? JSON.parse(Cookies.get('adminInfo')) : null
+
+
 const sidebar = [
   {
     path: "/dashboard", // the url

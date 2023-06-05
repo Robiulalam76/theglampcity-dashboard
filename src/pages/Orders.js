@@ -53,7 +53,6 @@ const Orders = () => {
     getProducts(id)
   }
 
-
   // const {
   //   orderRef,
   //   setStatus,
@@ -79,7 +78,6 @@ const Orders = () => {
       .then((data) => setStores(data));
   }, []);
 
-  console.log(stores);
 
   return (
     <>
@@ -93,7 +91,7 @@ const Orders = () => {
 
             <div>
               <Select
-                onClick={(e) => handleSetStoreId(e.target.value)}
+                onChange={(e) => handleSetStoreId(e.target.value)}
                 className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
               >
                 {
@@ -103,20 +101,20 @@ const Orders = () => {
             </div>
             <div>
               <Select
-                // onChange={(e) => setStatus(e.target.value)}
+                onChange={(e) => handleUpdateStaus(e.target.value)}
                 className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
               >
                 <option value="Status" defaultValue hidden>
                   Status
                 </option>
-                <option value="Delivered">Delivered</option>
-                <option value="Pending">Pending</option>
-                <option value="Processing">Processing</option>
-                <option value="Cancel">Cancel</option>
+                <option value="shopping soon">shopping soon</option>
+                <option value="shipped">shipped</option>
+                <option value="out for delivery">out for delivery</option>
+                <option value="delivered">delivered</option>
               </Select>
             </div>
             <div>
-              <Select
+              {/* <Select
                 // onChange={(e) => setTime(e.target.value)}
                 className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
               >
@@ -127,7 +125,7 @@ const Orders = () => {
                 <option value="7">Last 7 days orders</option>
                 <option value="15">Last 15 days orders</option>
                 <option value="30">Last 30 days orders</option>
-              </Select>
+              </Select> */}
             </div>
             <div>
               <CSVDownloader data={orderData} filename={'orders'}>
@@ -161,7 +159,7 @@ const Orders = () => {
                 <TableCell>Invoice</TableCell>
               </tr>
             </TableHeader>
-            <OrderTable orders={orders} />
+            <OrderTable orders={orders} getProducts={getProducts} storeId={storeId} />
           </Table>
           {/* <TableFooter>
             <Pagination

@@ -87,12 +87,16 @@ const StoreDrawer = ({ store, setStore, openDrawer, closeDrawer }) => {
             setIsUpdate(true);
             notifySuccess(res.message);
             form.reset()
+            setLogoFile([])
+            setImageFiles([])
             setStore({})
             closeDrawer(false)
           })
           .catch((err) => {
             setIsUpdate(true);
             notifyError(err.message);
+            setLogoFile([])
+            setImageFiles([])
             setStore({})
             closeDrawer(false)
           });
@@ -109,11 +113,15 @@ const StoreDrawer = ({ store, setStore, openDrawer, closeDrawer }) => {
             setIsUpdate(true);
             notifySuccess(res.message);
             form.reset()
+            setLogoFile([])
+            setImageFiles([])
             closeDrawer(false)
           })
           .catch((err) => {
             setIsUpdate(true);
             notifyError(err.message);
+            setLogoFile([])
+            setImageFiles([])
             closeDrawer(false)
           });
       }

@@ -9,11 +9,11 @@ const OrderServices = {
   },
 
   getOrderByUser(id, body) {
-    return requests.get(`/orders/user/${id}`, body);
+    return requests.get(`/order/user/${id}`, body);
   },
 
   getOrderById(id, body) {
-    return requests.get(`/orders/${id}`, body);
+    return requests.get(`/order/${id}`, body);
   },
 
   updateOrder(id, body, headers) {
