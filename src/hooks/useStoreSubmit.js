@@ -95,6 +95,7 @@ const useStoreSubmit = (id) => {
     setImageUrl,
     children,
     setChildren,
+    setIsUpdate
   };
 };
 

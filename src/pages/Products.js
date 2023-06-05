@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -27,6 +27,7 @@ import ProductTable from "../components/product/ProductTable";
 import SelectCategory from "../components/form/SelectCategory";
 import MainDrawer from "../components/drawer/MainDrawer";
 import ProductDrawer from "../components/drawer/ProductDrawer";
+import Cookies from "js-cookie";
 
 const Products = () => {
   const { toggleDrawer } = useContext(SidebarContext);
@@ -47,44 +48,39 @@ const Products = () => {
   } = useFilter(data);
 
 
-  // const [stores, setStores] = useState([])
+  const [stores, setStores] = useState([])
 
-  // const [storeId, setStoreId] = useState("")
-  // const [product, setProduct] = useState(null)
-  // const [products, setProducts] = useState([]);
+  const [storeId, setStoreId] = useState("")
+  const [product, setProduct] = useState(null)
+  const [products, setProducts] = useState([]);
 
-  // const getProducts = (id) => {
-  //   fetch(`http://localhost:5055/api/products/store/${id}`)
-  //     .then(res => res.json())
-  //     .then(data => setProducts(data))
-  // }
+  const getProducts = (id) => {
+    fetch(`http://localhost:5055/api/products/store/${id}`)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+  }
 
-  // useEffect(() => {
-  //   getProducts(stores[0]?._id)
-  // }, [stores]);
+  useEffect(() => {
+    getProducts(stores[0]?._id)
+  }, [stores]);
 
-  // const handleSetStoreId = (id) => {
-  //   setStoreId(id)
-  //   getProducts(id)
-  // }
+  const handleSetStoreId = (id) => {
+    setStoreId(id)
+    getProducts(id)
+  }
 
+  const adminInfo = Cookies.get('adminInfo')
+    ? JSON.parse(Cookies.get('adminInfo')) : null
 
-  // console.log(products);
-
-  // const adminInfo = Cookies.get('adminInfo')
-  //   ? JSON.parse(Cookies.get('adminInfo')) : null
-
-  // useEffect(() => {
-  //   fetch(`http://localhost:5055/api/store/getAllStores/byrole`, {
-  //     headers: {
-  //       authorization: `Bearer ${adminInfo?.token}`
-  //     }
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => setStores(data));
-  // }, []);
-
-  // console.log(stores);
+  useEffect(() => {
+    fetch(`http://localhost:5055/api/store/getAllStores/byrole`, {
+      headers: {
+        authorization: `Bearer ${adminInfo?.token}`
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => setStores(data));
+  }, []);
 
 
   return (
@@ -114,7 +110,17 @@ const Products = () => {
               ></button>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <SelectCategory setFilter={setFilter} />
+              {/* <SelectCategory setFilter={setFilter} /> */}
+              <Select
+                onChange={(e) => handleSetStoreId(e.target.value)}
+                className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
+              >
+                {
+                  stores?.map(store => (
+                    <option value={store?._id}>{store?.name}</option>
+                  ))
+                }
+              </Select>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
               <Select
@@ -213,7 +219,7 @@ const Products = () => {
 
       {loading ? (
         <Loading loading={loading} />
-      ) : serviceData?.length !== 0 ? (
+      ) : products?.length !== 0 ? (
         <TableContainer className="mb-8 rounded-b-lg">
           <Table>
             <TableHeader>
@@ -230,7 +236,7 @@ const Products = () => {
                 <TableCell className="text-right">Actions</TableCell>
               </tr>
             </TableHeader>
-            <ProductTable products={dataTable} />
+            <ProductTable products={products} />
           </Table>
           <TableFooter>
             <Pagination

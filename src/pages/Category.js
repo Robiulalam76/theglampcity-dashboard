@@ -31,7 +31,6 @@ const Category = () => {
   const { user } = useContext(AdminContext);
   const { data, loading } = useAsync(CategoryServices.getAllCategory);
 
-  console.log(user);
 
   const {
     categoryRef,
@@ -72,7 +71,7 @@ const Category = () => {
               ></button>
             </div>
             <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
-              <SelectCategory setFilter={setFilter} />
+              {/* <SelectCategory setFilter={setFilter} /> */}
             </div>
             <div className="w-full md:w-56 lg:w-56 xl:w-56">
               <Button onClick={toggleDrawer} className="w-full rounded-md h-12">
@@ -103,7 +102,10 @@ const Category = () => {
                   user?.role === "admin" && <TableCell className="text-center">Published</TableCell>
                 }
 
-                <TableCell className="text-right">Actions</TableCell>
+                {
+                  user?.role === "admin" && <TableCell className="text-right">Actions</TableCell>
+                }
+
               </tr>
             </TableHeader>
             <CategoryTable categories={dataTable} />

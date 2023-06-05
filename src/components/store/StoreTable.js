@@ -8,17 +8,27 @@ import CategoryDrawer from '../drawer/CategoryDrawer';
 import useToggleDrawer from '../../hooks/useToggleDrawer';
 import EditDeleteButton from '../table/EditDeleteButton';
 import { AdminContext } from '../../context/AdminContext';
+import { useState } from 'react';
+import StoreDrawer from '../drawer/StoreDrawer';
 
 const StoreTable = ({ stores }) => {
-    const { serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
+    const { serviceId, handleModalOpen } = useToggleDrawer();
     const { user } = useContext(AdminContext);
+    const [openDrawer, setOpenDrawer] = useState(false)
+    const [store, setStore] = useState({})
+    const handleUpdate = (data) => {
+        setOpenDrawer(true)
+        setStore(data)
+    }
 
     return (
         <>
+
+            <StoreDrawer store={store} setStore={setStore} openDrawer={openDrawer} closeDrawer={setOpenDrawer} />
             <MainModal id={serviceId} />
-            <MainDrawer>
+            {/* <MainDrawer>
                 <CategoryDrawer id={serviceId} />
-            </MainDrawer>
+            </MainDrawer> */}
 
             <TableBody>
                 {stores?.map((store) => (
@@ -53,7 +63,7 @@ const StoreTable = ({ stores }) => {
 
                         <TableCell className="text-sm ">{store?.name}</TableCell>
                         <TableCell>
-                            {store.verified === "true" ? (
+                            {store.verified ? (
                                 <Badge type="success">Verified</Badge>
                             ) : (
                                 <Badge type="danger">unverified</Badge>
@@ -68,7 +78,7 @@ const StoreTable = ({ stores }) => {
 
                         <TableCell>
                             <EditDeleteButton
-                                id={store?._id}
+                                store={store}
                                 handleUpdate={handleUpdate}
                                 handleModalOpen={handleModalOpen}
                             />

@@ -3,19 +3,19 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 
 import Tooltip from '../tooltip/Tooltip';
 
-const EditDeleteButton = ({ id, handleUpdate, handleModalOpen }) => {
+const EditDeleteButton = ({ store, handleUpdate, handleModalOpen }) => {
   return (
     <>
       <div className="flex justify-end text-right">
         <div
-          onClick={() => handleUpdate(id)}
+          onClick={() => handleUpdate(store)}
           className="p-2 cursor-pointer text-gray-400 hover:text-green-600"
         >
           <Tooltip id="edit" Icon={FiEdit} title="Edit" bgColor="#10B981" />
         </div>
 
         <div
-          onClick={() => handleModalOpen(id)}
+          onClick={() => handleModalOpen(store?._id)}
           className="p-2 cursor-pointer text-gray-400 hover:text-red-600"
         >
           <Tooltip

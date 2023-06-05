@@ -19,7 +19,7 @@ import useToggleDrawer from '../../hooks/useToggleDrawer';
 
 const ProductTable = ({ products }) => {
   const { serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
-
+  console.log(products);
   return (
     <>
       <MainModal id={serviceId} />

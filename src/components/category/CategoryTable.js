@@ -55,13 +55,16 @@ const CategoryTable = ({ categories }) => {
               </TableCell>
             }
 
-            <TableCell>
-              <EditDeleteButton
-                id={parent._id}
-                handleUpdate={handleUpdate}
-                handleModalOpen={handleModalOpen}
-              />
-            </TableCell>
+            {
+              user?.role === "admin" && <TableCell>
+                <EditDeleteButton
+                  id={parent._id}
+                  handleUpdate={handleUpdate}
+                  handleModalOpen={handleModalOpen}
+                />
+              </TableCell>
+            }
+
           </TableRow>
         ))}
       </TableBody>

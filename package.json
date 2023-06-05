@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@pathofdev/react-tag-input": "^1.0.7",
+    "@react-pdf/font": "^2.3.6",
     "@react-pdf/renderer": "^2.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,6 +16,7 @@
     "classnames": "2.2.6",
     "currency-symbol-map": "^5.0.1",
     "dayjs": "^1.10.7",
+    "fontkit": "^2.0.2",
     "html2canvas": "^1.4.0",
     "js-cookie": "^3.0.1",
     "jspdf": "^2.5.0",
@@ -43,7 +45,13 @@
     "web-vitals": "^1.1.2"
   },
   "resolutions": {
-    "react-scripts/**/react-error-overlay": "6.0.9"
+    "react-scripts/**/react-error-overlay": "6.0.9",
+    "@react-pdf/font": "2.2.1",
+    "@react-pdf/pdfkit": "2.1.0"
+  },
+  "overrides": {
+    "@react-pdf/font": "2.2.1",
+    "@react-pdf/pdfkit": "2.1.0"
   },
   "scripts": {
     "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
